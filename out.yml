@@ -4,20 +4,14 @@ Description: AWS Serverless Spring Boot 2 API - my.service::my-service
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
-
 Resources:
   MyServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: my.service.StreamLambdaHandler::handleRequest
       Runtime: java21
-      Architectures:
-        - x86_64
-      CodeUri: .
-      MemorySize: 2024
-      SnapStart:
-        ApplyOn: "PublishedVersions"
-      AutoPublishAlias: "test"
+      CodeUri: s3://niso-lambda-bucket/47012e3c1e59b6564204a0b5452051aa
+      MemorySize: 1024
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 90
       Events:
@@ -26,10 +20,10 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: any
-
 Outputs:
   MyServiceApi:
     Description: URL for application
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping
     Export:
       Name: MyServiceApi

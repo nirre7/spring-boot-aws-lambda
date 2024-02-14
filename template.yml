@@ -19,7 +19,7 @@ Resources:
         ApplyOn: "PublishedVersions"
       AutoPublishAlias: "test"
       Policies: AWSLambdaBasicExecutionRole
-      Timeout: 90
+      Timeout: 900
       Events:
         ProxyResource:
           Type: Api
